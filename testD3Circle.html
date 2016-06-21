@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
+<div id = "evolutionCanvas">
+</div>
+<svg width="720" height="120">
+  <!--<circle cx="40" cy="60" r="10"></circle>
+  <circle cx="80" cy="60" r="10"></circle>
+  <circle cx="120" cy="60" r="10"></circle>-->
+</svg>
+<script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script><script>
+
+  // var circle = d3.selectAll("circle");
+  // circle.data([32, 57, 112, 293]);
+  // circle.attr("r", function(d) { return Math.sqrt(d); });
+  // circle.attr("cx", function(d, i) { return i * 100 + 30; });
+
+  var svg = d3.select("svg");
+
+  var data = [32, 57, 112, 293]
+
+  something(data)
+  
+  setTimeout(function(){
+    svg.selectAll("circle")
+    .data([100,50])
+    .attr("r", 0)
+    .attr("cy", 60)
+    .attr("cx", function(d, i) { return i * 100 + 30; })
+    .attr("r", function(d) { return Math.sqrt(d); })
+    .exit().remove();
+  },1000)
+
+  function something(data) {
+    svg.selectAll("circle")
+   .data(data)
+   .enter().append("circle")
+    .attr("r", 0)
+    .transition()
+    .attr("cy", 60)
+    .attr("cx", function(d, i) { return i * 100 + 30; })
+    .attr("r", function(d) { return Math.sqrt(d); });
+  }
+
+  // var svgCanvas = d3.select("#evolutionCanvas")
+  //             .append('svg')
+  //             .attr('width', 500)
+  //             .attr('height', 500);
+
+  //       svgCanvas.append("circle")
+  //                  .attr("cx", 250)
+  //                  .attr("cy", 250)
+  //                  .attr("r", 50)
+  //                  .attr("fill", "blue")
+
+// svg.selectAll("circle")
+    
+  // debugger;
+  //   .data([23, 45])
+  //   .enter().append("circle")
+  //   .attr("r", 0)
+  //   .transition()
+  //   .delay(750)
+  //   .attr("cy", 60)
+  //   .attr("cx", function(d, i) { return i * 100 + 30; })
+  //   .attr("r", function(d) { return Math.sqrt(d); })
+
+
+// var circle = svg.selectAll("circle")
+//           .data([32, 57]);
+
+//     circle.exit().remove();
+
+
+</script>

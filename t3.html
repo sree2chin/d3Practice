@@ -1,0 +1,84 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<script>
+
+			var width = 500;
+			var height = 500;
+
+			var widthScale = d3.scale
+			                   .linear()
+			                   .domain([0, 100])// domain
+			                   .range([0, width]); // resulting range
+			var colorScale = d3.scale
+							   .linear()
+							   .domain([0, 60])
+							   .range(["red", "blue"])
+			// In D3 we can send data to elements with array like this.
+			// var data = [20, 30, 40, 60];
+			var data = [
+				{"name": "A", "value": 100},
+				{"name": "A", "value": 30},
+				{"name": "A", "value": 40},
+				{"name": "A", "value": 50}
+			]
+
+			// think of this like a stamp where you can call any where
+			var axis = d3.svg
+			             .axis()
+			             //default # of ticks is 10
+			             .ticks(5)
+			             .scale(widthScale)
+
+			// first create a canvas like this
+			var canvas = d3.select("body")
+						   .append("svg")
+						   .attr("width", width)
+						   .attr("height", width)
+							// g lets us to apply transformations
+						   .append("g")
+							// transform is used to move to right, left.. rotate.. etc
+						   .attr("transform", "translate(20, 0)")
+						   // .call(axis)
+			
+			var bars = canvas.selectAll("rect")
+			                 .data(data)
+			                 .enter()
+			                 .append("rect")
+			                 .attr("width", function(d){ return widthScale(d.value)})
+			                 .attr("height", 30)
+			                 .attr("fill", function(d) { return colorScale(d.value)})
+			                 .attr("y", function(d, i) {return i * 100})
+			                 .append("text")
+						    .attr("x", function(d){ return widthScale(d.value)})
+						    .attr("y", function(d, i) {return i * 100})
+						    .attr("dy", ".35em")
+						    .text(function(d) { return d.name; });
+			canvas.append("g")
+			      .attr("transform", "translate(0,400)")
+			      .call(axis);  
+			// Example for exit
+			// var d = [32, 56]
+			// canvas.selectAll("rect")
+			//                  .data(d)
+			//                  .attr("fill", "black")
+			//                  .exit()
+			//                  .attr("fill", "blue");
+
+		</script>
+	</body>
+</html>

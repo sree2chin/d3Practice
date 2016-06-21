@@ -1,0 +1,118 @@
+
+
+
+<html>
+  <head>
+      <title>d3</title>
+      <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+      <style>
+        .chart div {
+        font: 10px sans-serif;
+        background-color: steelblue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+      }
+      </style>
+  </head>
+  <body>
+    
+    <script>
+  var data = {
+  "name": "Max",
+  "value": 100,
+  "children":  [
+    {
+      "name": "Sylvia",
+      "value": 75,
+      "children": [
+        {
+          "name": "craig",
+          "value": 25
+        },
+        {
+          "name": "Robin",
+          "value": 25
+        },
+        {
+          "name": "Anna",
+          "value": 25
+        }
+      ]
+    },
+    {
+      "name": "Bob",
+      "value": 75,
+      "children": [
+        {
+          "name": "A",
+          "value": 25
+        },
+        {
+          "name": "B",
+          "value": 25
+        },
+        
+      ]
+    },
+    {
+      "name": "Mr X",
+      "value": 75
+    }
+  ]
+}
+
+var data2 = {
+  "name": "Max",
+  "value": 100,
+  "children": [
+    {"name": "max", "value": 100},
+    {"name": "max", "value": 125},
+    {"name": "max", "value": 50},
+    {"name": "max", "value": 78},
+    {"name": "max", "value": 34},
+    {"name": "max", "value": 90},
+    {"name": "max", "value": 32},
+    {"name": "max", "value": 4},
+    {"name": "max", "value": 290},
+    {"name": "max", "value": 23}
+  ]
+}
+    var width = 800;
+    var height = 600;
+
+   var canvas = d3.select("body")
+               .append("svg")
+               .attr("width", width)
+               .attr("height", height)
+               .append("g")
+               .attr("transform", "translate(50, 50)");
+      // DIAGONAL
+      var diagonal = d3.svg.diagonal()
+      //if we want to convert to horizontal
+                       .projection( function(d){return [d.y, d.x];} )
+
+      var pack = d3.layout.pack()
+                   .size([width, height - 50])
+                   .padding(10)
+      var nodes = pack.nodes(data);
+      console.log(nodes)
+      var node = canvas.selectAll(".node")
+                       .data(nodes)
+                       .enter()
+                       .append("g")
+                       .attr("class", "node")
+                       .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"})
+      node.append("circle")
+          .attr("r", function(d){return d.r})
+          .attr("fill", "steelblue")
+          .attr("opacity", 0.25)
+          .attr("stroke", "#ADADAD")
+          .attr("stroke-width", "2")
+      node.append("text")
+          .text(function (d) {return d.children ? "" : d.name} )
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<script>
+			// var data = [10, 20, 30, 40, 50];
+			var data = [
+				{
+					"name": "blahblah",
+					"age": 2
+				},
+				{
+					"name": "blahblah",
+					"age": 89
+				},
+				{
+					"name": "blahblah",
+					"age": 34
+				},
+				{
+					"name": "blahblah",
+					"age": 12
+				},
+				{
+					"name": "blahblah",
+					"age": 78
+				},
+				{
+					"name": "blahblah",
+					"age": 9
+				},
+				{
+					"name": "blahblah",
+					"age": 45
+				},
+				{
+					"name": "blahblah",
+					"age": 12
+				},
+				{
+					"name": "blahblah",
+					"age": 19
+				},
+				{
+					"name": "blahblah",
+					"age": 16
+				},
+				{
+					"name": "blahblah",
+					"age": 18
+				},
+				{
+					"name": "blahblah",
+					"age": 23
+				},
+				{
+					"name": "blahblah",
+					"age": 45
+				},
+				{
+					"name": "blahblah",
+					"age": 31
+				}
+			];
+			// d3.csv("ages.csv", function(data){
+			// 	console.log(data)
+			// })		
+			var map = data.map(function(elem, i) {return elem.age;} )	
+			console.log(map)
+
+			// let's create histogram
+			var histogram = d3.layout.histogram()
+			                  .bins(5)
+			                  (map)
+			console.log(histogram)
+			// this prints array of arrays
+			// 0: 2
+			// 1: 12
+			// 2: 9
+			// 3: 2
+			// 4: 12
+			// 5: 19
+			// 6: 16
+			// 7: 18
+			// dx represents the range or span or width of each interval
+			// dx: 17.4
+			// length: 8
+			// stands for lower bound of this array
+			// x: 2
+			// represent # of values in each interval
+			// y: 8
+
+			var width = 1000
+			var height = 1000
+			var padding = 50
+
+			var y = d3.scale.linear()
+			          .domain([0, d3.max(histogram.map(function(i){return i.length;}))])
+			          .range([0, height]);
+			var x = d3.scale.linear()
+			          .domain([0, d3.max(map)])
+			          .range([0, width]);
+			var xAxis = d3.svg.axis()
+			              .scale(x)
+			              .orient("bottom")
+			var canvas = d3.select("body")
+			               .append("svg")
+			               .attr("width", width)
+			               .attr("height", height + padding)
+			               // to change the position of whole canvas
+			               .append("g")
+			               		.attr("transform", "translate(20, 0)");
+			var group = canvas.append("g")
+							  .attr("transform", "translate(0," + height +")")
+			                  .call(xAxis)
+			var bars = canvas.selectAll(".bar")
+			                 .data(histogram)
+			                 .enter()
+			                 .append("g");
+      var line = d3.svg.line()
+                   .x(function(d) {return d.x;})
+                   .y(function(d) {return d.y;});
+      var newList = [];
+      var tempList = [];
+      for(var key in data) {
+          tempList = [];
+          tempList.push({"x": 0, "y": 0});
+          tempList.push({"x": 0, "y": 300})
+          newList.push(tempList);
+      }
+      var newListLength = newList.length;
+      var i = 0;
+      var tempData = [
+        {"x": 10, "y": 100},
+        {"x": 20, "y": 200},
+        {"x": 30, "y": 300},
+        {"x": 800, "y": 0},
+      ];
+      // debugger;
+      // for(i = 0; i < newListLength; i++) {
+          group.selectAll("path")
+               .data([tempData])
+               .enter()
+               .append("path")
+               .attr("d", line)
+               .attr("fill", "none")
+               .attr("stroke", "#000")
+               .attr("stroke-width", 10)
+      // }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,139 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<script>
+		var multiLineData = [
+				{
+					"name": "blahblah",
+					"age": 2
+				},
+				{
+					"name": "blahblah",
+					"age": 89
+				},
+				{
+					"name": "blahblah",
+					"age": 34
+				},
+				{
+					"name": "blahblah",
+					"age": 12
+				},
+				{
+					"name": "blahblah",
+					"age": 78
+				},
+				{
+					"name": "blahblah",
+					"age": 9
+				},
+				{
+					"name": "blahblah",
+					"age": 45
+				},
+				{
+					"name": "blahblah",
+					"age": 12
+				},
+				{
+					"name": "blahblah",
+					"age": 19
+				},
+				{
+					"name": "blahblah",
+					"age": 16
+				},
+				{
+					"name": "blahblah",
+					"age": 18
+				},
+				{
+					"name": "blahblah",
+					"age": 23
+				},
+				{
+					"name": "blahblah",
+					"age": 45
+				},
+				{
+					"name": "blahblah",
+					"age": 31
+				}
+			];
+			// d3 provides us with path generators.
+			var width = 800;
+			var height = 500;
+			var widthScale = d3.scale.linear()
+			                   .domain([0, 700])
+			var heightScale = d3.scale.linear()
+			          .domain([0, 89])
+			          .range([0, 400]);
+			var color = d3.scale.category20();
+			var canvas = d3.select("body").append("svg")
+			               .attr("width", width)
+			               .attr("height", height)
+			var area = d3.svg.area()
+					     .x(0)
+					     .y0(400)
+					     .y1(0);
+			var data = [
+				{"x": 10, "y": 100},
+				{"x": 20, "y": 200},
+				{"x": 30, "y": 300},
+				{"x": 800, "y": 0},
+			];
+			var i = 0;
+			var newList = [];
+		    var tempList = [];
+	        for(i=0; i<multiLineData.length; i++) {
+	          // console.log("........")
+	          // console.log(multiLineData[i])
+	      	  for(var key in multiLineData[i]) {
+		          tempList = [
+		          		{"x": 0, "y": 400},
+		          		{"x": 700, "y": 400-heightScale(multiLineData[i].age)}
+		          ];
+		          newList.push(tempList);
+		      }
+	        }
+	        // console.log("newList.............", newList)
+			var line = d3.svg.line()
+			             .x(function(d) {return d.x;})
+			             .y(function(d) {return d.y;});
+
+			var group;
+			for(i = 0; i < newList.length; i++) {
+				// console.log("......")
+				// console.log(newList[i])
+				group = canvas.append("g")
+			                  .attr("transform", "translate(100, 100)");
+				group.selectAll("path")
+			     .data([newList[i]])
+			     .enter()
+			     .append("path")
+			     .attr("d", line)
+			     .attr("fill", "none")
+			     .attr("stroke", function(d,i){return color(d[1].y);})
+			     .attr("stroke-width", 2)
+			    canvas.append("path")
+			      .datum(newList[i])
+			      .attr("fill", "steelblue")
+			      .attr("d", area);
+			}
+		</script>
+	</body>
+</html>

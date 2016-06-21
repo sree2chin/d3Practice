@@ -1,0 +1,128 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<div class="chart">
+			<!--<div style="width: 40px;">4</div>
+			<div style="width: 80px;">8</div>
+			<div style="width: 150px;">15</div>
+			<div style="width: 160px;">16</div>
+			<div style="width: 230px;">23</div>
+		    <div style="width: 420px;">42</div>-->
+		</div>
+
+		<script>
+			//D3 is actually an object with some built in methods and..
+
+			d3.select("body").append("div").html("hi").style("color", "blue")
+
+			// first create a canvas like this
+			var canvas = d3.select("body")
+						   .append("svg")
+						   .attr("width", 500)
+						   .attr("height", 500)
+			// let's create a CIRCLE 
+			// here c is centre, and x is horizontal axis
+			var circle = canvas.append("circle")
+							   .attr("cx", 250)
+							   .attr("cy", 250)
+							   .attr("r", 50)
+							   .attr("fill", "blue")
+
+			// example RECTANGLE
+			var rect = canvas.append("rect")
+						     .attr("width", 100)
+						     .attr("height", 10)
+						     .attr("fill", "red")
+
+			// example LINE
+			// here x1, y1 is one starting point of the line and x2, y2 is another one
+			var line = canvas.append("line")
+							 .attr("x1", 0)
+							 .attr("y1", 10)
+							 .attr("x2", 40)
+							 .attr("y2", 400)
+							 .attr("stroke", "green")
+							 .attr("stroke-width", 10)
+
+			var width = 500;
+			var height = 500;
+
+			// In D3 we can send data to elements with array like this.
+			var data = [10, 30, 60];
+			
+			/* Scales are both objects and provide functions
+			   we make max value to take max width in our container
+			   the data values 
+			 */
+			var widthScale = d3.scale.linear()
+							   .domain([0,60]) // domain data values
+							   .range([0,width]) // to render range
+
+			var colorScale = d3.scale.linear()
+			                   .domain([0, 60])
+			                   .range(["red", "blue"]);
+			// this axis object needs to know the scale to display it
+			var axis = d3.svg.axis()
+						 .ticks(5)
+			             .scale(widthScale);
+			var canvas2 = d3.select("body")
+						   .append("svg")
+						   .attr("width", width)
+						   .attr("height", height)
+						   .append("g")
+						   .attr("transform", "translate(50, 50)")
+						   // .call(axis)
+			// we are creating bars(rectangles) over here with the given data
+			/*
+				if(htmlElements > dataElements) 
+					go to exit()
+				else if (htmlElements < dataElements)
+					go to enter()
+				else if (htmlElements == dataElements) 
+					got to data() //update
+				else
+					do nothing
+			 */
+			var bars = canvas2.selectAll("rect")
+							 .data(data)
+							 .enter()
+							 .append("rectangles")
+							 .attr("width", function(d){ return widthScale(d)})
+							 .attr("height", 50)
+							 .attr("fill", function(d){ return colorScale(d); })
+							 .attr("y", function(d, i) {return i * 90})
+
+			canvas2.append("g")
+			       .attr("transform", "translate(0, 200)")
+			       .call(axis)
+
+			// same output as above commented divs
+			var data = [4, 8, 15, 16, 23, 42];
+
+			var x = d3.scale.linear()
+			    .domain([0, d3.max(data)])
+			    .range([0, 420]);
+
+			d3.select(".chart")
+			  .selectAll("div")
+			    .data(data)
+			  .enter().append("div")
+			    .style("width", function(d) { return x(d) + "px"; })
+			    .text(function(d) { return d; });
+		</script>
+	</body>
+</html>

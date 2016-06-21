@@ -1,0 +1,53 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<script>
+			// d3 provides us with path generators.
+			var width = 1000;
+			var height = 1000;
+
+			var canvas = d3.select("body").append("svg")
+			               .attr("width", width)
+			               .attr("height", height)
+
+			var data = [
+				{"x": 10, "y": 100},
+				{"x": 20, "y": 200},
+				{"x": 30, "y": 300},
+				{"x": 800, "y": 0},
+			];
+
+			var line = d3.svg.line()
+			             .x(function(d) {return d.x;})
+			             .y(function(d) {return d.y;});
+
+			var group = canvas.append("g")
+			                  .attr("transform", "translate(100, 100)");
+			
+			group.selectAll("path")
+			     .data([data])
+			     .enter()
+			     .append("path")
+			     .attr("d", line)
+			     .attr("fill", "none")
+			     .attr("stroke", "#000")
+			     .attr("stroke-width", 10)
+
+
+		</script>
+	</body>
+</html>

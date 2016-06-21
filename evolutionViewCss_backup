@@ -1,0 +1,80 @@
+/* temporary css file */
+
+.axis--x text {
+  font: 10px sans-serif;
+}
+
+.axis--y text {
+  font: oblique 15px Georgia, serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.toolTipStyle {    
+    position: absolute;    
+    text-align: center;        
+    min-width: 100px;              
+    min-height: 28px;               
+    padding: 2px;             
+    font: 14px sans-serif;      
+    background: #f5f5f5; 
+    border: 0px;    
+    color: black;    
+    border-radius: 2px;        
+    pointer-events: none;    
+    margin: auto;     
+    z-index: 9999;
+    padding: 6px;
+    border: solid 1px #eee;
+};
+
+.toolTipStyle:before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  border: 20px solid steelblue;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  color:black;
+  left: -20px
+}
+
+circle {
+    opacity: 0.8;
+}
+
+/* testing slider css */
+.slide .slideAxis {
+  font: 10px sans-serif;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.slide .slideAxis .domain {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .3;
+  stroke-width: 10px;
+  stroke-linecap: round;
+}
+
+.slide .slideAxis .halo {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+
+.slider .handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .5;
+  stroke-width: 1.25px;
+  cursor: crosshair;
+}

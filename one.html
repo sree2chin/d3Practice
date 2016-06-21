@@ -1,0 +1,33 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+
+	    </style>
+	</head>
+	<body>
+		
+		<div class="chart"></div>
+		<p>
+
+		</p>
+
+		<div class="circle">
+		</div>
+
+		<script>
+			d3.select("body").transition()
+    		.style("background-color", "grey");
+
+			d3.select("body").append("div").html("Hello, world!");
+			d3.select(".chart").append("div").html("using class");
+
+			d3.select("body").selectAll("p")
+		    .data([4, 8, 15, 16, 23, 42])
+		  	.enter().append("p")
+		    .text(function(d) { return "I m number " + d + "!"; });
+
+		</script>
+	</body>
+</html>

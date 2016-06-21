@@ -1,0 +1,46 @@
+<html>
+	<head>
+	    <title>d3</title>
+	    <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+	    <style>
+	    	.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+	    </style>
+	</head>
+	<body>
+		
+		<script>
+			var canvas = d3.select("body")
+			               .append("svg")
+			               .attr("width", 500)
+			               .attr("height", 500);
+			var circle = canvas.append("circle")
+			                   .attr("cx", 50)
+			                   .attr("cy", 50)
+			                   .attr("r", 25);
+			circle.transition()
+				  .duration(1500)
+				  .delay(1000)
+			      .attr("cx", 200)
+			      // .transition()
+			      // .attr("cy", 200)
+
+			      // this function will run after the transition has ended.
+			      .each("end", function () {d3.select(this).attr("fill", "blue")})
+			      // this function will run before the transition has started.
+			      .each("start", function () {d3.select(this).attr("fill", "yellow")})
+
+			// circle.transition()
+			//       .delay(1500)
+			//       .duration(1000)
+			//       .attr("cx", 50)
+
+		</script>
+	</body>
+</html>
